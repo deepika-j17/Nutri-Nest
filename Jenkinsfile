@@ -3,7 +3,7 @@ pipeline {
 
     environment {
         IMAGE_NAME = "nutrinest"
-        DOCKER_REGISTRY = "deepikajayaraman" 
+        DOCKER_REGISTRY = "deepikajayaraman"
         KUBE_DEPLOYMENT = "nutrinest-deployment"
         KUBE_NAMESPACE = "default"
     }
@@ -36,15 +36,18 @@ pipeline {
             }
         }
 
+        // ❌ This stage is commented out because Jenkins is not authenticated to Kubernetes.
+        // ✅ You already applied the YAMLs manually. You can re-enable this once Jenkins can access the cluster.
+        /*
         stage('Kubernetes Apply YAMLs') {
             steps {
-                // This creates or updates the deployment/service if not already applied
                 sh '''
-                    kubectl apply -f k8s/nutrinest-mysql.yaml --validate=false
+                    kubectl apply -f k8s/nutrinest-deployment.yaml --validate=false
                     kubectl apply -f k8s/nutrinest-service.yaml --validate=false
                 '''
             }
         }
+        */
 
         stage('Kubernetes Deploy') {
             steps {
