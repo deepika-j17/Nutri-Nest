@@ -11,7 +11,7 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                git 'https://github.com/deepika-j17/Nutri-Nest.git'
+                git branch: 'main', url: 'https://github.com/deepika-j17/Nutri-Nest.git'
             }
         }
 
