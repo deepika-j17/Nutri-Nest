@@ -51,7 +51,8 @@ pipeline {
 
         stage('Kubernetes Deploy') {
             steps {
-                sh "kubectl set image deployment/$KUBE_DEPLOYMENT $IMAGE_NAME=$DOCKER_REGISTRY/$IMAGE_NAME --namespace=$KUBE_NAMESPACE"
+                withCredentials([file(credentialsId: 'kubeconfig-creds', variable: 'KUBECONFIG')]) {
+                sh "kubectl set image deployment/$KUBE_DEPLOYMENT $IMAGE_NAME=$DOCKER_REGISTRY/$IMAGE_NAME --namespace=$KUBE_NAMESPACE"}
             }
         }
     }
