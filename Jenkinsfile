@@ -36,6 +36,16 @@ pipeline {
             }
         }
 
+        stage('Kubernetes Apply YAMLs') {
+            steps {
+                // This creates or updates the deployment/service if not already applied
+                sh '''
+                    kubectl apply -f k8s/nutrinest-deployment.yaml
+                    kubectl apply -f k8s/nutrinest-service.yaml
+                '''
+            }
+        }
+
         stage('Kubernetes Deploy') {
             steps {
                 sh "kubectl set image deployment/$KUBE_DEPLOYMENT $IMAGE_NAME=$DOCKER_REGISTRY/$IMAGE_NAME --namespace=$KUBE_NAMESPACE"
