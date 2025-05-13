@@ -40,7 +40,7 @@ pipeline {
             steps {
                 // This creates or updates the deployment/service if not already applied
                 sh '''
-                    kubectl apply -f k8s/nutrinest-deployment.yaml
+                    kubectl apply -f k8s/nutrinest-mysql.yaml
                     kubectl apply -f k8s/nutrinest-service.yaml
                 '''
             }
