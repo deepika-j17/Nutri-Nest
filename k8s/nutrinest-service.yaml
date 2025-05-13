@@ -21,9 +21,15 @@ spec:
             - name: SPRING_DATASOURCE_URL
               value: jdbc:mysql://mysql:3306/nutrinest
             - name: SPRING_DATASOURCE_USERNAME
-              value: root
+              valueFrom:
+                secretKeyRef:
+                  name: mysql-credentials
+                  key: SPRING_DATASOURCE_USERNAME
             - name: SPRING_DATASOURCE_PASSWORD
-              value: Deepikaj@17ammu
+              valueFrom:
+                secretKeyRef:
+                  name: mysql-credentials
+                  key: SPRING_DATASOURCE_PASSWORD
             - name: SPRING_JPA_HIBERNATE_DDL_AUTO
               value: update
             - name: SPRING_JPA_SHOW_SQL
@@ -34,6 +40,8 @@ spec:
               value: org.hibernate.dialect.MySQL8Dialect
             - name: SERVER_PORT
               value: "9091"
+      imagePullSecrets:
+        - name: regcred
 ---
 apiVersion: v1
 kind: Service
@@ -47,3 +55,4 @@ spec:
       port: 80
       targetPort: 9091
   type: LoadBalancer
+
