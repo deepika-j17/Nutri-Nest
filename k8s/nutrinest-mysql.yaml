@@ -27,10 +27,7 @@ spec:
           image: mysql:5.7
           env:
             - name: MYSQL_ROOT_PASSWORD
-              valueFrom:
-                secretKeyRef:
-                  name: mysql-credentials
-                  key: SPRING_DATASOURCE_PASSWORD
+              value: Deepikaj@17ammu
             - name: MYSQL_DATABASE
               value: nutrinest
           ports:
@@ -54,4 +51,3 @@ spec:
     - protocol: TCP
       port: 3306
       targetPort: 3306
-
