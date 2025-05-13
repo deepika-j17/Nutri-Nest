@@ -1,12 +1,49 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nutrinest-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: nutrinest
+  template:
+    metadata:
+      labels:
+        app: nutrinest
+    spec:
+      containers:
+        - name: nutrinest
+          image: deepikajayaraman/nutrinest:latest
+          ports:
+            - containerPort: 9091
+          env:
+            - name: SPRING_DATASOURCE_URL
+              value: jdbc:mysql://mysql:3306/nutrinest
+            - name: SPRING_DATASOURCE_USERNAME
+              value: root
+            - name: SPRING_DATASOURCE_PASSWORD
+              value: Deepikaj@17ammu
+            - name: SPRING_JPA_HIBERNATE_DDL_AUTO
+              value: update
+            - name: SPRING_JPA_SHOW_SQL
+              value: "true"
+            - name: SPRING_DATASOURCE_DRIVER_CLASS_NAME
+              value: com.mysql.cj.jdbc.Driver
+            - name: SPRING_JPA_PROPERTIES_HIBERNATE_DIALECT
+              value: org.hibernate.dialect.MySQL8Dialect
+            - name: SERVER_PORT
+              value: "9091"
+---
 apiVersion: v1
 kind: Service
 metadata:
-  name: nutrinest-service
+  name: nutrinest
 spec:
   selector:
     app: nutrinest
   ports:
     - protocol: TCP
       port: 80
-      targetPort: 8080
+      targetPort: 9091
   type: LoadBalancer
